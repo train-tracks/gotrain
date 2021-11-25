@@ -54,12 +54,12 @@ type Departure struct {
 
 // BoardingTip is a tip for passengers to board another train for certain destinations
 type BoardingTip struct {
-	ExitStation       Station
-	Destination       Station
-	TrainType         string
-	TrainTypeCode     string
-	DeparturePlatform string
-	DepartureTime     time.Time
+	ExitStation       Station   `json:"exit_station"`
+	Destination       Station   `json:"destination"`
+	TrainType         string    `json:"type"`
+	TrainTypeCode     string    `json:"type_code"`
+	DeparturePlatform string    `json:"departure_platform"`
+	DepartureTime     time.Time `json:"departure_time"`
 }
 
 // TravelTip is a tip that a service calls (or doesn't call) at a specific station
@@ -208,9 +208,6 @@ func (departure Departure) GetRemarksTips(language string) (remarks, tips []stri
 
 		// Translate all tips:
 		for _, tip := range departure.TravelTips {
-			tips = append(tips, tip.Translation(language))
-		}
-		for _, tip := range departure.BoardingTips {
 			tips = append(tips, tip.Translation(language))
 		}
 		for _, tip := range departure.ChangeTips {

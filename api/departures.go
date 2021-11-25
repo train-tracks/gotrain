@@ -110,10 +110,15 @@ func departureToJSON(departure models.Departure, language string, verbose bool, 
 		"cancelled":                departure.Cancelled,
 		"platform_changed":         departure.PlatformChanged(),
 
-		"remarks": []interface{}{},
-		"tips":    []interface{}{},
+		"boarding_tips": []interface{}{},
+		"remarks":       []interface{}{},
+		"tips":          []interface{}{},
 
 		"wings": []interface{}{},
+	}
+
+	if departure.BoardingTips != nil {
+		response["boarding_tips"] = departure.BoardingTips
 	}
 
 	response["remarks"], response["tips"] = departure.GetRemarksTips(language)

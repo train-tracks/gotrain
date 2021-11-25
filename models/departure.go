@@ -252,7 +252,12 @@ func (departure Departure) GetRemarksTips(language string) (remarks, tips []stri
 	}
 
 	if departure.ServiceName != "" {
-		tips = append(tips, departure.ServiceName)
+		switch departure.ServiceName {
+		case "Sprinter rijdt als Intercity":
+			tips = append(tips, Translate("Sprinter rijdt als Intercity", "Sprinter replaces Intercity", language))
+		default:
+			tips = append(tips, departure.ServiceName)
+		}
 	}
 
 	return

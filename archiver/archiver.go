@@ -157,7 +157,7 @@ func materialsToJSON(materials []models.Material) []map[string]interface{} {
 
 func materialToJSON(material models.Material) map[string]interface{} {
 	materialResponse := map[string]interface{}{
-		"type":             material.NaterialType,
+		"type":             material.MaterialType,
 		"accessible":       material.Accessible,
 		"number":           material.NormalizedNumber(),
 		"position":         material.Position,

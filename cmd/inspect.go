@@ -242,7 +242,7 @@ var inspectServiceCommand = &cobra.Command{
 						fmt.Print("       Material: ")
 
 						for _, material := range stop.Material {
-							fmt.Printf("%s[%s]>%s ", material.NaterialType, material.Number, material.DestinationActual.Code)
+							fmt.Printf("%s[%s]>%s ", material.MaterialType, material.Number, material.DestinationActual.Code)
 						}
 
 						fmt.Print("\n")

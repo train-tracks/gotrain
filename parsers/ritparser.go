@@ -119,7 +119,7 @@ func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
 					material.ID = &id
 				}
 
-				material.NaterialType = materialInfo.SelectElement("MaterieelDeelSoort").Text() + "-" + materialInfo.SelectElement("MaterieelDeelAanduiding").Text()
+				material.MaterialType = materialInfo.SelectElement("MaterieelDeelSoort").Text() + "-" + materialInfo.SelectElement("MaterieelDeelAanduiding").Text()
 				material.Accessible = ParseInfoPlusBoolean(materialInfo.SelectElement("MaterieelDeelToegankelijk"))
 				material.RemainsBehind = ParseInfoPlusBoolean(materialInfo.SelectElement("AchterBlijvenMaterieelDeel"))
 

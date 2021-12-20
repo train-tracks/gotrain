@@ -15,9 +15,9 @@ type Station struct {
 
 // Material is the physical train unit
 type Material struct {
-	ID                 *string `json:"id"`
-	NaterialType       string  `json:"type"`
-	Number             string  `json:"number"`
+	ID           *string `json:"id"`
+	MaterialType string  `json:"type"`
+	Number       string  `json:"number"`
 	Position           int     `json:"position"`
 	DestinationActual  Station `json:"destination_actual"`
 	DestinationPlanned Station `json:"destination_planned"`

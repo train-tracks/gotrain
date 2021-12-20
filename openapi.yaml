@@ -465,6 +465,9 @@ components:
               destination_code:
                 type: string
                 example: Den Haag Centraal
+              id:
+                type: string
+                example: "OH1"
               number:
                 type: string
                 example: "4024"

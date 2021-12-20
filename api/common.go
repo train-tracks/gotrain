@@ -57,6 +57,7 @@ func nullString(value string) *string {
 
 func materialToJSON(material models.Material, language string, verbose bool) map[string]interface{} {
 	materialResponse := map[string]interface{}{
+		"id":               material.ID,
 		"type":             material.NaterialType,
 		"accessible":       material.Accessible,
 		"number":           material.NormalizedNumber(),

@@ -114,6 +114,11 @@ func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
 			for _, materialInfo := range stopInfo.SelectElements("MaterieelDeel") {
 				var material models.Material
 
+				if materialInfo.SelectElement("MaterieelDeelID") != nil {
+					id := materialInfo.SelectElement("MaterieelDeelID").Text()
+					material.ID = &id
+				}
+
 				material.NaterialType = materialInfo.SelectElement("MaterieelDeelSoort").Text() + "-" + materialInfo.SelectElement("MaterieelDeelAanduiding").Text()
 				material.Accessible = ParseInfoPlusBoolean(materialInfo.SelectElement("MaterieelDeelToegankelijk"))
 				material.RemainsBehind = ParseInfoPlusBoolean(materialInfo.SelectElement("AchterBlijvenMaterieelDeel"))

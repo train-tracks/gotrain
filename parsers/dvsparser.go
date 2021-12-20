@@ -152,7 +152,7 @@ func ParseDvsMessage(reader io.Reader) (departure models.Departure, err error) {
 		for _, materialInfo := range wingInfo.SelectElements("MaterieelDeelDVS") {
 			var material models.Material
 
-			material.NaterialType = materialInfo.SelectElement("MaterieelSoort").Text() + "-" + materialInfo.SelectElement("MaterieelAanduiding").Text()
+			material.MaterialType = materialInfo.SelectElement("MaterieelSoort").Text() + "-" + materialInfo.SelectElement("MaterieelAanduiding").Text()
 
 			materialNumberNode := materialInfo.SelectElement("MaterieelNummer")
 			materialPositionNode := materialInfo.SelectElement("MaterieelDeelVolgordeVertrek")

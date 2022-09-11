@@ -104,7 +104,7 @@ var inspectDepartureCommand = &cobra.Command{
 				if material.Number != "" {
 					unitNumber = *material.NormalizedNumber()
 				}
-				fmt.Printf("%s[%s]>%s ", material.NaterialType, unitNumber, material.DestinationActual.Code)
+				fmt.Printf("%s[%s]>%s ", material.MaterialType, unitNumber, material.DestinationActual.Code)
 			}
 
 			fmt.Print("\n")

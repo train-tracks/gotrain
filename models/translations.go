@@ -127,6 +127,8 @@ var causeTranslations = map[string]string{
 	"door een tekort aan personeel":                                      "due to staff shortage",
 	"door acties personeel":                                              "due to staff strike",
 	"door een systeemstoring":                                            "due to a system failure",
+	"door noodzakelijke aanpassing in de dienstregeling":                 "due to a necessary timetable change",
+	"om veiligheidsredenen":                                              "for safety reasons",
 }
 
 // Translate returns the appropriate translation based on language
@@ -156,7 +158,7 @@ func TranslateCause(causeLong string) string {
 	}
 
 	// Unknown translation, return original
-	log.WithField("cause", causeLong).Warn("No translation for cause")
+	log.WithField("cause", causeLong).Warnf("No translation for cause: %s", causeLong)
 	return causeLong
 }
 

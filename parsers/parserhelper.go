@@ -59,6 +59,7 @@ func ParseInfoPlusStation(element *etree.Element) models.Station {
 	station.NameShort = element.SelectElement("KorteNaam").Text()
 	station.NameMedium = element.SelectElement("MiddelNaam").Text()
 	station.NameLong = element.SelectElement("LangeNaam").Text()
+	station.Uic = ParseInfoPlusInteger(element.SelectElement("UICCode"))
 
 	return station
 }
@@ -161,4 +162,19 @@ func ParseInfoPlusDuration(element *etree.Element) int {
 	}
 
 	return delay.Seconds() + delay.Minutes()*60 + delay.Hours()*3600
+}
+
+// ParseInfoPlusInteger parses an integer from an element
+func ParseInfoPlusInteger(element *etree.Element) int {
+	if element == nil {
+		return 0
+	}
+
+	i, error := strconv.Atoi(element.Text())
+
+	if error != nil {
+		return 0
+	}
+
+	return i
 }

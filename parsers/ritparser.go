@@ -3,10 +3,15 @@ package parsers
 import (
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/beevik/etree"
 	"github.com/rijdendetreinen/gotrain/models"
+	log "github.com/sirupsen/logrus"
 )
+
+// USZ (UitStapZijde) contains the exit sides
+var USZ map[string]map[string]map[string]string
 
 // ParseRitMessage parses a RIT XML message to a Service object
 func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
@@ -56,7 +61,7 @@ func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
 		servicePart.ServiceNumber = partInfo.SelectElement("LogischeRitDeelNummer").Text()
 		servicePart.Modifications = ParseInfoPlusModifications(partInfo)
 
-		for _, stopInfo := range partInfo.SelectElements("LogischeRitDeelStation") {
+		for i, stopInfo := range partInfo.SelectElements("LogischeRitDeelStation") {
 			var serviceStop models.ServiceStop
 
 			serviceStop.Station = ParseInfoPlusStation(stopInfo.SelectElement("Station"))
@@ -97,6 +102,18 @@ func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
 			if stopInfo.SelectElement("TreinAankomstSpoor") != nil {
 				serviceStop.ArrivalPlatformActual = ParseInfoPlusPlatform(ParseWhenAttributeMulti(stopInfo, "TreinAankomstSpoor", "InfoStatus", "Actueel"))
 				serviceStop.ArrivalPlatformPlanned = ParseInfoPlusPlatform(ParseWhenAttributeMulti(stopInfo, "TreinAankomstSpoor", "InfoStatus", "Gepland"))
+
+				// Previous station
+				if i-1 >= 0 {
+					previousStation := ParseInfoPlusStation(partInfo.SelectElements("LogischeRitDeelStation")[i-1].SelectElement("Station"))
+					exitSide, exitSideIsKnown := USZ[serviceStop.Station.Code][previousStation.Code][strings.ToUpper(serviceStop.ArrivalPlatformActual)]
+					if exitSideIsKnown {
+						serviceStop.ExitSide = &exitSide
+					} else {
+						log.Debugf("No exit side known for %s from direction of %s with arrival at platform %s", serviceStop.Station.NameLong, previousStation.NameLong, serviceStop.ArrivalPlatformActual)
+					}
+				}
+
 			}
 			if stopInfo.SelectElement("TreinVertrekSpoor") != nil {
 				serviceStop.DeparturePlatformActual = ParseInfoPlusPlatform(ParseWhenAttributeMulti(stopInfo, "TreinVertrekSpoor", "InfoStatus", "Actueel"))

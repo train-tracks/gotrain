@@ -62,6 +62,7 @@ type ServiceStop struct {
 	ArrivalCancelled   bool
 	DepartureCancelled bool
 
+	ExitSide      *string
 	Modifications []Modification
 	Material      []Material
 }

@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"encoding/json"
+	"github.com/rijdendetreinen/gotrain/parsers"
 	"os"
 	"os/signal"
 	"strings"
@@ -48,6 +50,8 @@ func startServer(cmd *cobra.Command) {
 
 	signal.Notify(signalChan, os.Interrupt)
 	signal.Notify(signalChan, syscall.SIGTERM)
+
+	parsers.USZ = readUSZ()
 
 	initStores()
 
@@ -164,4 +168,20 @@ func shutdown() {
 
 	log.Info("Saving store contents...")
 	stores.SaveStores()
+}
+
+// readUSZ reads the exit sides from disk
+func readUSZ() map[string]map[string]map[string]string {
+	b, err := os.ReadFile("USZ_20220328.json")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	var uszDocument map[string]map[string]map[string]string
+	err = json.Unmarshal(b, &uszDocument)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return uszDocument
 }

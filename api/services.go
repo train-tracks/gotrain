@@ -106,6 +106,7 @@ func serviceStopToJSON(stop models.ServiceStop, language string, verbose bool) m
 		"assistance_available": stop.AssistanceAvailable,
 		"stopping_actual":      stop.StoppingActual,
 		"stopping_planned":     stop.StoppingPlanned,
+		"exit_side":            stop.ExitSide,
 		"stop_type":            stop.StopType,
 		"do_not_board":         stop.DoNotBoard,
 

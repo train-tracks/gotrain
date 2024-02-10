@@ -14,6 +14,7 @@ FROM debian
 RUN apt-get update -y
 RUN apt-get -y install libzmq3-dev
 COPY --from=builder /go/bin/gotrain /app/gotrain
+COPY USZ_20220328.json USZ_20220328.json
 WORKDIR /
 RUN mkdir data
 RUN chmod +x /app/gotrain

@@ -129,6 +129,8 @@ var causeTranslations = map[string]string{
 	"door een systeemstoring":                                            "due to a system failure",
 	"door noodzakelijke aanpassing in de dienstregeling":                 "due to a necessary timetable change",
 	"om veiligheidsredenen":                                              "for safety reasons",
+	"door een dienstregelingswijziging":                                  "due to a timetable change",
+	"inzet veiligheidsmedewerkers":                                       "due to deployment of safety personnel",
 }
 
 // Translate returns the appropriate translation based on language

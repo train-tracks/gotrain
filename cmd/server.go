@@ -172,7 +172,7 @@ func shutdown() {
 
 // readUSZ reads the exit sides from disk
 func readUSZ() map[string]map[string]map[string]string {
-	b, err := os.ReadFile("USZ_20220328.json")
+	b, err := os.ReadFile("USZ_20240715.json")
 	if err != nil {
 		log.Fatalln(err)
 	}

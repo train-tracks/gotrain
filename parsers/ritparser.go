@@ -7,7 +7,7 @@ import (
 
 	"github.com/beevik/etree"
 	"github.com/rijdendetreinen/gotrain/models"
-	log "github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 )
 
 // USZ (UitStapZijde) contains the exit sides
@@ -24,6 +24,7 @@ func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = fmt.Errorf("parser error: %+v", r)
+			log.Error().Err(err).Msg("Recovered from panic in ParseRitMessage")
 		}
 	}()
 
@@ -116,7 +117,7 @@ func ParseRitMessage(reader io.Reader) (service models.Service, err error) {
 					if exitSideIsKnown {
 						serviceStop.ExitSide = &exitSide
 					} else {
-						log.Debugf("No exit side known for %s from direction of %s with arrival at platform %s", serviceStop.Station.NameLong, previousStation.NameLong, serviceStop.ArrivalPlatformActual)
+						log.Debug().Msgf("No exit side known for %s from direction of %s with arrival at platform %s", serviceStop.Station.NameLong, previousStation.NameLong, serviceStop.ArrivalPlatformActual)
 					}
 				}
 

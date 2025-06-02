@@ -2,6 +2,9 @@ name: Go
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
 
   build:
@@ -9,21 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Set up Go 1.x
-      uses: actions/setup-go@v2
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
       with:
-        go-version: ^1.15
+        go-version: ^1.24
       id: go
     
     - name: Install libzmq
       run: sudo apt-get install libzmq3-dev
 
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-
     - name: Get dependencies
       run: |
-        go get -v -t -d ./...
+        go get -v -t ./...
 
     - name: Build
       run: go build -v .
@@ -34,6 +36,7 @@ jobs:
     - name: Test
       run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
 
-    - uses: codecov/codecov-action@v1
+    - uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.txt
+        files: ./coverage.txt
+        token: ${{ secrets.CODECOV_TOKEN }}
